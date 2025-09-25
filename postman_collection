@@ -1,0 +1,595 @@
+{
+	"info": {
+		"_postman_id": "cf2c803f-714b-4716-8a16-c6f023ccbe5d",
+		"name": "backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40489003",
+		"_collection_link": "https://scheduler-5621.postman.co/workspace/Neutron-workspace~b23436e3-4b76-4b13-8a8e-29c0ec5693ee/collection/40489003-cf2c803f-714b-4716-8a16-c6f023ccbe5d?action=share&source=collection_link&creator=40489003"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Sign up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"john\",\r\n    \"lastName\": \"test\",\r\n    \"email\": \"test@mailinator.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}auth/signup",
+							"host": [
+								"{{URL}}auth"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"\r",
+									"if (response.token) {\r",
+									"    pm.environment.set(\"Token\", 'Bearer ' + response.token);\r",
+									"} else {\r",
+									"    console.log(\"Token not found in response.\");\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@mailinator.com\",\r\n    \"password\": \"admin123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}auth/login",
+							"host": [
+								"{{URL}}auth"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"HR\",\r\n    \"lastName\": \"user\",\r\n    \"email\": \"hr@mailinator.com\",\r\n    \"password\": \"123456\",\r\n    \"roleId\": \"68d4de4255fba3a40e0258b9\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}users/create",
+							"host": [
+								"{{URL}}users"
+							],
+							"path": [
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"HR\",\r\n    \"lastName\": \"manager\",\r\n    \"email\": \"hr@mailinator.com\",\r\n    \"roleId\": \"68d4de4255fba3a40e0258b9\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}users/update/68d4deda85ea64016ec615c3",
+							"host": [
+								"{{URL}}users"
+							],
+							"path": [
+								"update",
+								"68d4deda85ea64016ec615c3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}users/delete/68d4deda85ea64016ec615c3",
+							"host": [
+								"{{URL}}users"
+							],
+							"path": [
+								"delete",
+								"68d4deda85ea64016ec615c3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get details",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}users/details/68d4deda85ea64016ec615c3",
+							"host": [
+								"{{URL}}users"
+							],
+							"path": [
+								"details",
+								"68d4deda85ea64016ec615c3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"search\": \"\",\r\n    \"limit\": 10,\r\n    \"page\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}users/list",
+							"host": [
+								"{{URL}}users"
+							],
+							"path": [
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check access module",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}users/check-access-module/68d500efaece22221cfa5e8c",
+							"host": [
+								"{{URL}}users"
+							],
+							"path": [
+								"check-access-module",
+								"68d500efaece22221cfa5e8c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update users with same data",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userIds\": [\r\n        \"68d4d000160b9697b78ae9f9\"\r\n    ],\r\n    \"lastName\": \"ABC\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}users/update-many",
+							"host": [
+								"{{URL}}users"
+							],
+							"path": [
+								"update-many"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update users with different data",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"_id\": \"68d4d000160b9697b78ae9f9\",\r\n        \"firstName\": \"John\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}users/update-many-diff",
+							"host": [
+								"{{URL}}users"
+							],
+							"path": [
+								"update-many-diff"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Role",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"roleName\": \"hr\",\r\n    \"accessModules\": [\"user\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}roles/create",
+							"host": [
+								"{{URL}}roles"
+							],
+							"path": [
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"roleName\": \"Hr\",\r\n    \"accessModules\": [\"user\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}roles/update/68d4de4255fba3a40e0258b9",
+							"host": [
+								"{{URL}}roles"
+							],
+							"path": [
+								"update",
+								"68d4de4255fba3a40e0258b9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}roles/delete/68d4db9beead6ec724a0fc4e",
+							"host": [
+								"{{URL}}roles"
+							],
+							"path": [
+								"delete",
+								"68d4db9beead6ec724a0fc4e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get role By Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}roles/details/68d4db9beead6ec724a0fc4e",
+							"host": [
+								"{{URL}}roles"
+							],
+							"path": [
+								"details",
+								"68d4db9beead6ec724a0fc4e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"search\": \"\",\r\n    \"limit\": \"10\",\r\n    \"page\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}roles/list",
+							"host": [
+								"{{URL}}roles"
+							],
+							"path": [
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add access module",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accessModules\": \"users\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}roles/add-access-module/68d4de4255fba3a40e0258b9",
+							"host": [
+								"{{URL}}roles"
+							],
+							"path": [
+								"add-access-module",
+								"68d4de4255fba3a40e0258b9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete access module",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accessModules\": \"users\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}roles/delete-access-module/68d4de4255fba3a40e0258b9",
+							"host": [
+								"{{URL}}roles"
+							],
+							"path": [
+								"delete-access-module",
+								"68d4de4255fba3a40e0258b9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
